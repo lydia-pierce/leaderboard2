@@ -3,11 +3,12 @@ package leaderboard_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	keepertest "leaderboard2/testutil/keeper"
 	"leaderboard2/testutil/nullify"
 	"leaderboard2/x/leaderboard"
 	"leaderboard2/x/leaderboard/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesis(t *testing.T) {
@@ -22,8 +23,8 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
-		Board: &types.Board{
-			PlayerInfo: new(types.PlayerInfo),
+		Board: types.Board{
+			PlayerInfo: []types.PlayerInfo{},
 		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}

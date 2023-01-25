@@ -3,12 +3,13 @@ package keeper
 import (
 	"errors"
 
+	"leaderboard2/x/leaderboard/types"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
-	"leaderboard2/x/leaderboard/types"
 )
 
 // TransmitCandidatePacket transmits the packet over IBC with the specified source port and source channel
@@ -73,7 +74,24 @@ func (k Keeper) OnRecvCandidatePacket(ctx sdk.Context, packet channeltypes.Packe
 		return packetAck, err
 	}
 
-	// TODO: packet reception logic
+	allPlayerInfo := k.GetAllPlayerInfo(ctx)
+
+	found_in_player_list := false
+	for i := range allPlayerInfo {
+		if allPlayerInfo[i].Index == data.PlayerInfo.Index {
+			allPlayerInfo[i] = *data.PlayerInfo
+			found_in_player_list = true
+			break
+		}
+	}
+
+	if !found_in_player_list {
+		k.SetPlayerInfo(ctx, *data.PlayerInfo)
+	}
+
+	// Here we can fetch the PlayerInfo and update the board
+	playerInfoList := k.GetAllPlayerInfo(ctx)
+	k.UpdateBoard(ctx, playerInfoList)
 
 	return packetAck, nil
 }
