@@ -1,0 +1,10 @@
+syntax = "proto3";
+package leaderboard2.leaderboard;
+
+option go_package = "leaderboard2/x/leaderboard/types";
+import "leaderboard/player_info.proto"; 
+
+message Board {
+  PlayerInfo playerInfo = 1; 
+  
+}

@@ -29886,6 +29886,55 @@ paths:
           format: uint64
       tags:
         - Query
+  /leaderboard2/leaderboard/board:
+    get:
+      summary: Queries a Board by index.
+      operationId: Leaderboard2LeaderboardBoard
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Board:
+                type: object
+                properties:
+                  playerInfo:
+                    type: object
+                    properties:
+                      index:
+                        type: string
+                      wonCount:
+                        type: string
+                        format: uint64
+                      lostCount:
+                        type: string
+                        format: uint64
+                      forfeitedCount:
+                        type: string
+                        format: uint64
+                      dateUpdated:
+                        type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /leaderboard2/leaderboard/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -52020,6 +52069,25 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
+  leaderboard2.leaderboard.Board:
+    type: object
+    properties:
+      playerInfo:
+        type: object
+        properties:
+          index:
+            type: string
+          wonCount:
+            type: string
+            format: uint64
+          lostCount:
+            type: string
+            format: uint64
+          forfeitedCount:
+            type: string
+            format: uint64
+          dateUpdated:
+            type: string
   leaderboard2.leaderboard.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -52085,6 +52153,28 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  leaderboard2.leaderboard.QueryGetBoardResponse:
+    type: object
+    properties:
+      Board:
+        type: object
+        properties:
+          playerInfo:
+            type: object
+            properties:
+              index:
+                type: string
+              wonCount:
+                type: string
+                format: uint64
+              lostCount:
+                type: string
+                format: uint64
+              forfeitedCount:
+                type: string
+                format: uint64
+              dateUpdated:
+                type: string
   leaderboard2.leaderboard.QueryGetPlayerInfoResponse:
     type: object
     properties:
